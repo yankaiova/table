@@ -1,23 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import NPage from "./pages/NPage/NPage";
+import TablePage from "./pages/TablePage/TablePage";
+import Layout from "../src/component/Layout";
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<TablePage />} />
+          <Route path="/notes" element={<NPage />} />
+        </Route>
+      </Routes>
     </div>
   );
 }
