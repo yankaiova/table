@@ -5,10 +5,9 @@ export const fetchMessages = createAsyncThunk(
   "message/fetchMessages",
   async function () {
     const response = await axios.get(
-      "https://jsonplaceholder.typicode.com/todos?_limit=10"
+      "https://jsonplaceholder.typicode.com/todos?_limit=110"
     );
     const data = await response.data;
-    // console.log(data);
     return data;
   }
 );
@@ -20,8 +19,22 @@ const toolkitSlice = createSlice({
     message: [1, 2, 3],
     status: null,
     error: null,
+    tablePerPage: 10,
+    currentPage: 1,
   },
   reducers: {
+    onNavigateNext(state) {
+      state.currentPage++;
+    },
+    onNavigatePrev(state) {
+      state.currentPage--;
+    },
+    onChangeTablePerpage(state, action) {
+      state.tablePerPage = action.payload;
+    },
+    onClickCurrentPage(state, action) {
+      state.currentPage = action.payload;
+    },
     increment(state) {
       state.count = state.count + 1;
       //  state.messages.push(action.payload);
@@ -45,4 +58,11 @@ const toolkitSlice = createSlice({
 });
 
 export default toolkitSlice.reducer;
-export const { increment, decrement } = toolkitSlice.actions;
+export const {
+  onNavigateNext,
+  onNavigatePrev,
+  onChangeTablePerpage,
+  onClickCurrentPage,
+  increment,
+  decrement,
+} = toolkitSlice.actions;
