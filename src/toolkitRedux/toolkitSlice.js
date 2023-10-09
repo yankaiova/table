@@ -4,19 +4,22 @@ import axios from "axios";
 export const fetchMessages = createAsyncThunk(
   "message/fetchMessages",
   async function () {
-    const response = await axios.get(
-      "https://jsonplaceholder.typicode.com/todos?_limit=110"
-    );
-    const data = await response.data;
-    return data;
+    try {
+      const response = await axios.get(
+        "https://jsonplaceholder.typicode.com/comments?_limit=200"
+      );
+      const data = await response.data;
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 );
 
 const toolkitSlice = createSlice({
   name: "toolkit",
   initialState: {
-    count: 10,
-    message: [1, 2, 3],
+    message: [],
     status: null,
     error: null,
     tablePerPage: 10,
@@ -36,12 +39,10 @@ const toolkitSlice = createSlice({
       state.currentPage = action.payload;
     },
     increment(state) {
-      state.count = state.count + 1;
-      //  state.messages.push(action.payload);
+      state.tablePerPage++;
     },
     decrement(state) {
-      state.count = state.count - 1;
-      //  state.messages.pop();
+      state.tablePerPage--;
     },
   },
   extraReducers: {
@@ -53,7 +54,6 @@ const toolkitSlice = createSlice({
       state.status = "resolved";
       state.message = action.payload;
     },
-    [fetchMessages.rejected]: (state, action) => {},
   },
 });
 
@@ -65,4 +65,5 @@ export const {
   onClickCurrentPage,
   increment,
   decrement,
+  onSignIn,
 } = toolkitSlice.actions;
