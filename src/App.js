@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import NPage from "./pages/NPage/NPage";
 import TablePage from "./pages/TablePage/TablePage";
@@ -8,16 +8,22 @@ import ProtectedRoute from "./router/ProtectedRoute";
 import "./App.css";
 
 function App() {
-  const user = localStorage.getItem("user");
+  const [isAuth, setIsAuth] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("user")) {
+      setIsAuth(true);
+    }
+  }, []);
 
   return (
     <div className="App">
-      {user && <Layout />}
+      {isAuth && <Layout />}
       <Routes>
         <Route
           path="/"
           element={
-            <ProtectedRoute user={user} redirectPath={"/login"}>
+            <ProtectedRoute user={isAuth} redirectPath={"/login"}>
               {" "}
               <TablePage />{" "}
             </ProtectedRoute>
@@ -26,7 +32,7 @@ function App() {
         <Route
           path="/n"
           element={
-            <ProtectedRoute user={user} redirectPath={"/login"}>
+            <ProtectedRoute user={isAuth} redirectPath={"/login"}>
               {" "}
               <NPage />{" "}
             </ProtectedRoute>
@@ -35,7 +41,7 @@ function App() {
         <Route
           path="/login"
           element={
-            <ProtectedRoute user={!user} redirectPath={"/"}>
+            <ProtectedRoute user={!isAuth} redirectPath={"/"}>
               {" "}
               <LoginPage />{" "}
             </ProtectedRoute>
