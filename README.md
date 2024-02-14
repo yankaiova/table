@@ -1,6 +1,3 @@
-Просмотр сообщений с управлением характеристики отображения (количеством сообщений на одной странице)
-![image](https://github.com/yankaiova/table/assets/100922254/c26b96d3-950b-4e30-9a6b-aefcc38870c9)
-
 
 # Getting Started with Create React App
 
